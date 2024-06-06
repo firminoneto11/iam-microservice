@@ -23,6 +23,9 @@ class TimeStampedBaseModel(DeclarativeBase):
         sa.String(36), unique=True, default=generate_uuid, sort_order=-1
     )
 
+    # NOTE: Subclasses fields will be placed in-between these base fields on a database
+    # level.
+
     active: Mapped[bool] = mapped_column(sa.Boolean(), default=True, sort_order=9995)
 
     deleted: Mapped[bool] = mapped_column(sa.Boolean(), default=False, sort_order=9996)
