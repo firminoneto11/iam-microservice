@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "authentication-microservice"
 version = "0.0.1"
-description = ""
+description = "An authentication microservice using FastAPI and an Hexagonal architecture"
 authors = ["firminoneto11 <firminoneto11@hotmail.com>"]
 readme = "README.md"
 
