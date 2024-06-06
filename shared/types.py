@@ -3,7 +3,7 @@ from typing import Literal, Protocol
 from fastapi import FastAPI
 from starlette.datastructures import State
 
-type EnvChoices = Literal["development", "test", "staging", "production"]
+type EnvChoices = Literal["development", "testing", "staging", "production"]
 
 
 class _ApplicationMountProtocol(Protocol):
