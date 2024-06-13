@@ -25,7 +25,7 @@ class BaseSettings:
     REDOC_URL = None
     OPENAPI_URL = "/openapi.json"
 
-    # NOTE: These are here only for type checking purposes. They should be set on the
+    # NOTE: These are here only for type checking purposes. They should be set in the
     # subclasses.
     if TYPE_CHECKING:
         ENVIRONMENT: "EnvChoices"
