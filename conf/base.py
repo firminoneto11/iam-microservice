@@ -7,11 +7,11 @@ if TYPE_CHECKING:
 
 
 with open("pyproject.toml", mode="rb") as stream:
-    pyproject = tomllib.load(stream)["tool"]["poetry"]
+    pyproject: dict = tomllib.load(stream)["tool"]["poetry"]
 
 
 class BaseSettings:
-    BASE_DIR = Path(__file__).parent.parent.parent
+    BASE_DIR = Path(__file__).parent.parent
 
     ENVIRONMENT_PREFIX = "IAM_MS"
 
@@ -19,10 +19,21 @@ class BaseSettings:
     APP_DESCRIPTION: str = pyproject["description"]
     APP_VERSION: str = pyproject["version"]
 
-    API_PREFIX = "/api"
     DOCS_URL = "/docs"
     REDOC_URL = None
     OPENAPI_URL = "/openapi.json"
+
+    PUBLIC_PREFIX = "/public"
+    CMS_PREFIX = "/cms"
+    API_PREFIX = "/api"
+
+    @property
+    def public_path(self):
+        return self.PUBLIC_PREFIX + self.API_PREFIX
+
+    @property
+    def cms_path(self):
+        return self.CMS_PREFIX + self.API_PREFIX
 
     # NOTE: These are here only for type checking purposes. They should be set in the
     # subclasses.

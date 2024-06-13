@@ -21,11 +21,11 @@ def generate_uuid():
 
 
 @overload
-def utc_timestamp(unix: Literal[True] = True) -> int: ...
+def utc_timestamp(unix: Literal[True]) -> int: ...
 
 
 @overload
-def utc_timestamp(unix: Literal[False] = False) -> datetime: ...
+def utc_timestamp(unix: Literal[False]) -> datetime: ...
 
 
 def utc_timestamp(unix: bool = False):
@@ -35,9 +35,7 @@ def utc_timestamp(unix: bool = False):
     return utc_now
 
 
-def reverse_url(
-    application: "ASGIApp", controller_name: str, version: str = "v1", **kwargs
-):
+def reverse_url(application: "ASGIApp", controller_name: str, version: str, **kwargs):
     for mount in application.state._mounted_applications:
         for route in mount.app.routes:
             if route.name == controller_name:
