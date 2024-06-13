@@ -8,11 +8,11 @@ if _TypeChecking:
     from shared.types import EnvChoices as _EnvChoices
 
 
-with (env := _get_env()).prefixed(_BaseSettings.ENVIRONMENT_PREFIX):
-    module: "_EnvChoices" = env.str("ENVIRONMENT", "development").lower().strip()
+with (_env := _get_env()).prefixed(_BaseSettings.ENVIRONMENT_PREFIX):
+    _module: "_EnvChoices" = _env.str("ENVIRONMENT", "development").lower().strip()
 
 
-match module:
+match _module:
     case "development":
         from .development import Settings as _Settings
     case "testing":
@@ -22,7 +22,7 @@ match module:
     case "production":
         from .production import Settings as _Settings
     case _:
-        raise RuntimeError(f"Invalid environment: {module!r}")
+        raise RuntimeError(f"Invalid environment: {_module!r}")
 
 
 settings = _Settings()
