@@ -1,7 +1,6 @@
+import tomllib
 from pathlib import Path
 from typing import TYPE_CHECKING
-
-import tomllib
 
 if TYPE_CHECKING:
     from shared.types import EnvChoices
@@ -14,7 +13,7 @@ with open("pyproject.toml", mode="rb") as stream:
 class BaseSettings:
     BASE_DIR = Path(__file__).parent.parent.parent
 
-    ENVIRONMENT_PREFIX = "AUTH_MS"
+    ENVIRONMENT_PREFIX = "IAM_MS"
 
     APP_NAME: str = pyproject["name"]
     APP_DESCRIPTION: str = pyproject["description"]

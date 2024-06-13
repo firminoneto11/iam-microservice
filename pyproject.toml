@@ -12,10 +12,70 @@ sqlalchemy = "2.0.*"
 alembic = "1.13.*"
 environs = "11.0.*"
 fastapi = "0.111.*"
+pydantic = "2.7.*"
+aiosqlite = "0.20.*"
+asyncpg = "0.29.*"
+anyio = "4.4.*"
+redis = "5.0.*"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "0.4.*"
+pytest = "8.2.*"
+pytest-env = "1.1.*"
+pytest-asyncio = "0.23.*"
+coverage = "7.5.*"
+pre-commit = "3.7.*"
+bandit = "1.7.*"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+# Ruff configs
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+extend-select = ["E4", "E7", "E9", "F"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Pytest configs
+[tool.pytest.ini_options]
+addopts = "-s -v --durations=5"
+markers = []
+asyncio_mode = "auto"
+
+# Pytest-Env configs
+[tool.pytest_env]
+IAM_MS_ENVIRONMENT = "testing"
+
+# Coverage configs
+[tool.coverage.run]
+omit = [
+    "test/*",
+    "tests/*",
+    "*conftest.py",
+    "venv/*",
+    "manage.py",
+    "cli/*",
+    ".venv/*",
+]
+data_file = ".coverage/coverage"
+branch = false
+
+[tool.coverage.report]
+skip_covered = true
+precision = 2
+fail_under = 80
+exclude_also = ["if TYPE_CHECKING:", "match module_:"]
+
+[tool.coverage.html]
+directory = ".coverage/html-report"
+skip_covered = true
