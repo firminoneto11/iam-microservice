@@ -6,7 +6,7 @@ with (env := get_env()).prefixed(BaseSettings.ENVIRONMENT_PREFIX):
 
     class Settings(BaseSettings):
         ENVIRONMENT = "production"
-        DATABASE_URL = env.str("DATABASE_URL")
-        ALLOWED_HOSTS = env.str("ALLOWED_HOSTS").split(",")
-        ALLOWED_ORIGINS = env.str("ALLOWED_ORIGINS").split(",")
+        DATABASE_URL: str = env.str("DATABASE_URL")
+        ALLOWED_HOSTS: list[str] = env.list("ALLOWED_HOSTS")
+        ALLOWED_ORIGINS: list[str] = env.list("ALLOWED_ORIGINS")
         DEBUG = False

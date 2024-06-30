@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 with open("pyproject.toml", mode="rb") as stream:
-    pyproject: dict = tomllib.load(stream)["tool"]["poetry"]
+    pyproject: dict[str, str] = tomllib.load(stream)["project"]
 
 
 class BaseSettings:
@@ -15,16 +15,16 @@ class BaseSettings:
 
     ENVIRONMENT_PREFIX = "IAM_MS"
 
-    APP_NAME: str = pyproject["name"]
-    APP_DESCRIPTION: str = pyproject["description"]
-    APP_VERSION: str = pyproject["version"]
+    APP_NAME = pyproject["name"]
+    APP_DESCRIPTION = pyproject["description"]
+    APP_VERSION = pyproject["version"]
 
     DOCS_URL = "/docs"
     REDOC_URL = None
     OPENAPI_URL = "/openapi.json"
 
     PUBLIC_PREFIX = "/public"
-    CMS_PREFIX = "/cms"
+    ADMIN_PREFIX = "/admin"
     API_PREFIX = "/api"
 
     @property
@@ -32,8 +32,8 @@ class BaseSettings:
         return self.PUBLIC_PREFIX + self.API_PREFIX
 
     @property
-    def cms_path(self):
-        return self.CMS_PREFIX + self.API_PREFIX
+    def admin_path(self):
+        return self.ADMIN_PREFIX + self.API_PREFIX
 
     # NOTE: These are here only for type checking purposes. They should be set in the
     # subclasses.
@@ -45,13 +45,13 @@ class BaseSettings:
         DEBUG: bool
 
     @classmethod
-    def get_asgi_settings(cls):
+    def get_asgi_settings(cls, main_mount: bool = False):
         return {
             "title": cls.APP_NAME,
             "description": cls.APP_DESCRIPTION,
             "version": cls.APP_VERSION,
             "debug": cls.DEBUG,
-            "docs_url": cls.DOCS_URL,
-            "openapi_url": cls.OPENAPI_URL,
-            "redoc_url": cls.REDOC_URL,
+            "docs_url": None if main_mount else cls.DOCS_URL,
+            "openapi_url": None if main_mount else cls.OPENAPI_URL,
+            "redoc_url": None if main_mount else cls.REDOC_URL,
         }
