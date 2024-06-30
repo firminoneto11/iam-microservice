@@ -17,7 +17,7 @@ class ApplicationMount:
 
 
 def _get_public_app_v1():
-    public_app_v1 = FastAPI(**settings.get_asgi_settings())
+    public_app_v1 = FastAPI(**settings.get_asgi_settings())  # type: ignore
 
     public_app_v1.include_router(public_misc_router)
     public_app_v1.include_router(public_users_router)
@@ -26,7 +26,7 @@ def _get_public_app_v1():
 
 
 def _get_admin_app_v1():
-    admin_app_v1 = FastAPI(**settings.get_asgi_settings())
+    admin_app_v1 = FastAPI(**settings.get_asgi_settings())  # type: ignore
 
     admin_app_v1.include_router(admin_router)
 
