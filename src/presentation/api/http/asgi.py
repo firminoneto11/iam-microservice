@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
     await app.state.db.disconnect()
 
 
-class ASGIApplication:
+class ASGIFactory:
     _apps_stack: list["ASGIApp"] = []
 
     @classmethod
@@ -44,8 +44,8 @@ class ASGIApplication:
         self.register_middleware()
 
     def setup_state(self):
-        self.application.state.mounted_applications = []
         self.application.state.db = DBAdapter(settings.DATABASE_URL)
+        self.application.state.mounted_applications = []
 
         for mount in get_mounts():
             self.application.mount(path=mount.path, app=mount.app, name=mount.name)
@@ -56,4 +56,4 @@ class ASGIApplication:
         self.application.add_middleware(**cors_middleware_configuration)  # type: ignore
 
 
-app = ASGIApplication.new()
+app = ASGIFactory.new()

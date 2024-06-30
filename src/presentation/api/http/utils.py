@@ -1,7 +1,9 @@
-def reverse_url(app_name: str, controller_name: str, **kwargs):
-    from .asgi import ASGIApplication
+def reverse_url[**P](
+    app_name: str, controller_name: str, *_: P.args, **kwargs: P.kwargs
+):
+    from src.presentation.api.http.asgi import ASGIFactory
 
-    for mount in ASGIApplication.latest_app().state.mounted_applications:
+    for mount in ASGIFactory.latest_app().state.mounted_applications:
         if mount.name != app_name:
             continue
 
