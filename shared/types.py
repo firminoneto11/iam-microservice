@@ -17,4 +17,4 @@ class _CustomAppState(State):
 
 
 class ASGIApp(FastAPI):
-    state: _CustomAppState
+    state: _CustomAppState  # type: ignore
