@@ -100,3 +100,9 @@ pythonVersion = "3.12"
 pythonPlatform = "Linux"
 venvPath = "./.venv"
 typeCheckingMode = "strict"
+# strictDictionaryInference = false
+# strictSetInference = false
+# strictListInference = false
+reportUnusedImport = false
+
+# typeshedPath = ".venv/lib/python3.12/site-packages"
