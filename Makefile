@@ -1,10 +1,10 @@
 env:
-	rm -rf venv/
-	python3.12 -m venv venv
+	rm -rf .venv/
+	rye sync
 
 deps:
 	pip install --upgrade pip setuptools
 	poetry install --no-root
 
 dev:
-	uvicorn src.presentation.api.rest.asgi:app --reload --port 8000
+	uvicorn src.presentation.api.http.asgi:app --reload --port 8000
