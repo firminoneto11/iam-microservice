@@ -5,6 +5,7 @@ from fastapi import FastAPI
 
 from conf import settings
 from shared.types import ASGIApp
+from src.infra.db import DBAdapter
 
 from .middleware import (
     allowed_hosts_middleware_configuration,
@@ -15,7 +16,9 @@ from .routers import get_mounts
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await app.state.db.connect()
     yield
+    await app.state.db.disconnect()
 
 
 class ASGIApplication:
@@ -34,7 +37,7 @@ class ASGIApplication:
     def __init__(self):
         self.application = cast(
             ASGIApp,
-            FastAPI(**settings.get_asgi_settings(main_mount=True), lifespan=lifespan),
+            FastAPI(**settings.get_asgi_settings(main_mount=True), lifespan=lifespan),  # type: ignore
         )
 
         self.setup_state()
@@ -42,14 +45,15 @@ class ASGIApplication:
 
     def setup_state(self):
         self.application.state.mounted_applications = []
+        self.application.state.db = DBAdapter(settings.DATABASE_URL)
 
         for mount in get_mounts():
             self.application.mount(path=mount.path, app=mount.app, name=mount.name)
             self.application.state.mounted_applications.append(mount)
 
     def register_middleware(self):
-        self.application.add_middleware(**allowed_hosts_middleware_configuration)
-        self.application.add_middleware(**cors_middleware_configuration)
+        self.application.add_middleware(**allowed_hosts_middleware_configuration)  # type: ignore
+        self.application.add_middleware(**cors_middleware_configuration)  # type: ignore
 
 
 app = ASGIApplication.new()
