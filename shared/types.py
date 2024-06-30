@@ -13,7 +13,7 @@ class _ApplicationMountProtocol(Protocol):
 
 
 class _CustomAppState(State):
-    _mounted_applications: list[_ApplicationMountProtocol]
+    mounted_applications: list[_ApplicationMountProtocol]
 
 
 class ASGIApp(FastAPI):
