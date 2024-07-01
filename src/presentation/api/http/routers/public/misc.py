@@ -2,4 +2,9 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-router.get("/health-check")
+
+router.add_api_route(
+    path="/health-check",
+    endpoint=lambda: None,
+    methods=["GET"],
+)

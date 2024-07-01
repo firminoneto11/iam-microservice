@@ -2,6 +2,24 @@ from fastapi import APIRouter
 
 router = APIRouter(prefix="/users")
 
+
+func = lambda: None  # noqa
+
+
+router.add_api_route(
+    path="",
+    endpoint=func,
+    methods=["POST"],
+    summary="Creates a new user",
+)
+
+router.add_api_route(
+    path="",
+    endpoint=func,
+    methods=["POST"],
+    summary="Creates a new user",
+)
+
 router.post("", summary="Creates a new user")
 router.post("/login", summary="Generates a new JWT pair")
 router.get(

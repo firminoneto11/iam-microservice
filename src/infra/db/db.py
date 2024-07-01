@@ -42,7 +42,7 @@ class Database:
         self._set_defaults()
 
     async def connect(
-        self, echo_sql: bool = False, pool_size: int = 5, max_overflow: int = 10
+        self, echo_sql: bool = False, pool_size: int = 5, max_overflow: int = 5
     ):
         if self._is_connected:
             return

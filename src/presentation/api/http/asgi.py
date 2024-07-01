@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 from conf import settings
 from shared.types import ASGIApp
-from src.infra.db import DBAdapter
+from src.infra.db import SqlDBAdapter
 
 from .middleware import (
     allowed_hosts_middleware_configuration,
@@ -44,7 +44,7 @@ class ASGIFactory:
         self.register_middleware()
 
     def setup_state(self):
-        self.application.state.db = DBAdapter(settings.DATABASE_URL)
+        self.application.state.db = SqlDBAdapter(settings.DATABASE_URL)
         self.application.state.mounted_applications = []
 
         for mount in get_mounts():

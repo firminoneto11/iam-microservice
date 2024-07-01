@@ -6,7 +6,7 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from conf import settings
-from src.application.ports.outbound.db import DBPort
+from src.application.ports.outbound.db import SqlDBPort
 
 from .db import Database
 
@@ -16,7 +16,7 @@ def _get_database(connection_string: str):
     return Database(connection_string)
 
 
-class DBAdapter(DBPort):
+class SqlDBAdapter(SqlDBPort):
     def __init__(self, connection_string: str):
         self._database = _get_database(connection_string)
 
@@ -25,7 +25,7 @@ class DBAdapter(DBPort):
         return self._database
 
     async def connect(
-        self, echo_sql: bool = False, pool_size: int = 5, max_overflow: int = 10
+        self, echo_sql: bool = False, pool_size: int = 5, max_overflow: int = 5
     ):
         await self.database.connect(
             echo_sql=echo_sql, pool_size=pool_size, max_overflow=max_overflow
