@@ -15,14 +15,14 @@ from .routers import get_mounts
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: ASGIApp):
     await app.state.db.connect()
     yield
     await app.state.db.disconnect()
 
 
 class ASGIFactory:
-    _apps_stack: list["ASGIApp"] = []
+    _apps_stack: list[ASGIApp] = []
 
     @classmethod
     def new(cls):
