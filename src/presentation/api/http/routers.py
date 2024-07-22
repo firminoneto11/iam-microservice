@@ -4,9 +4,8 @@ from fastapi import FastAPI
 
 from conf import settings
 
-from .admin.users import router as admin_router
-from .public.misc import router as public_misc_router
-from .public.users import router as public_users_router
+from .controllers.admin import user_router_admin
+from .controllers.public import misc_router, user_router
 
 
 @dataclass
@@ -19,8 +18,8 @@ class ApplicationMount:
 def _get_public_app_v1():
     public_app_v1 = FastAPI(**settings.get_asgi_settings())  # type: ignore
 
-    public_app_v1.include_router(public_misc_router)
-    public_app_v1.include_router(public_users_router)
+    public_app_v1.include_router(misc_router)
+    public_app_v1.include_router(user_router)
 
     return public_app_v1
 
@@ -28,7 +27,7 @@ def _get_public_app_v1():
 def _get_admin_app_v1():
     admin_app_v1 = FastAPI(**settings.get_asgi_settings())  # type: ignore
 
-    admin_app_v1.include_router(admin_router)
+    admin_app_v1.include_router(user_router_admin)
 
     return admin_app_v1
 
