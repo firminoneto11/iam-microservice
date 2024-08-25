@@ -1,9 +1,8 @@
 env:
 	rm -rf .venv/
-	rye sync
+	uv venv --python 3.12
 
 deps:
-	pip install --upgrade pip setuptools
 	poetry install --no-root
 
 dev:

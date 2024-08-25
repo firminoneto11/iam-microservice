@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 
 
 with open("pyproject.toml", mode="rb") as stream:
-    pyproject: dict[str, str] = tomllib.load(stream)["project"]
+    pyproject: dict[str, str] = tomllib.load(stream)["tool"]["poetry"]
 
 
 class BaseSettings:
@@ -23,17 +23,13 @@ class BaseSettings:
     REDOC_URL = None
     OPENAPI_URL = "/openapi.json"
 
-    PUBLIC_PREFIX = "/public"
-    ADMIN_PREFIX = "/admin"
-    API_PREFIX = "/api"
+    @property
+    def PUBLIC_API(self):
+        return "/api"
 
     @property
-    def public_path(self):
-        return self.PUBLIC_PREFIX + self.API_PREFIX
-
-    @property
-    def admin_path(self):
-        return self.ADMIN_PREFIX + self.API_PREFIX
+    def ADMIN_API(self):
+        return "/admin-api"
 
     # NOTE: These are here only for type checking purposes. They should be set in the
     # subclasses.

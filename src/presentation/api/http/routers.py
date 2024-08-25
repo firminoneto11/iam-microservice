@@ -35,12 +35,12 @@ def _get_admin_app_v1():
 def get_mounts():
     return [
         ApplicationMount(
-            path=f"{settings.public_path}/v1",
+            path=f"{settings.PUBLIC_API}/v1",
             app=_get_public_app_v1(),
             name="public_v1",
         ),
         ApplicationMount(
-            path=f"{settings.admin_path}/v1",
+            path=f"{settings.ADMIN_API}/v1",
             app=_get_admin_app_v1(),
             name="admin_v1",
         ),
